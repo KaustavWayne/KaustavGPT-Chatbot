@@ -29,3 +29,5 @@ streamlit>=1.38.0
 
 # ── Env / Utils ───────────────────────────────────────────────────────────────
 python-dotenv>=1.0.0
+
+# If need use pip install -U ddgs
