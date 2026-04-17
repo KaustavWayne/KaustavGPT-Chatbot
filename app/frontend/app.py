@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import sys
 import os
+os.environ["TRANSFORMERS_NO_TORCHVISION"] = "1"
 
 # ✅ FORCE project root into Python path
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
