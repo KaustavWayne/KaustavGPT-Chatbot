@@ -1,14 +1,4 @@
 from __future__ import annotations
-
-import sys
-import os
-os.environ["TRANSFORMERS_NO_TORCHVISION"] = "1"
-
-# ✅ FORCE project root into Python path
-ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
-if ROOT_DIR not in sys.path:
-    sys.path.insert(0, ROOT_DIR)
-
 import time
 import streamlit as st
 from langchain_core.messages import HumanMessage, AIMessage
