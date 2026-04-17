@@ -1,4 +1,10 @@
 from __future__ import annotations
+
+# 🔧 ADD THIS BLOCK RIGHT HERE (top of file)
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
 import time
 import streamlit as st
 from langchain_core.messages import HumanMessage, AIMessage
