@@ -1,6 +1,10 @@
 from __future__ import annotations
 
 from typing import Optional
+from dotenv import load_dotenv
+import os
+load_dotenv()
+api_key = os.getenv("ALPHA_VANTAGE_API_KEY")
 
 import requests
 from langchain_community.tools import DuckDuckGoSearchRun
@@ -46,18 +50,35 @@ def calculator(first_num: float, second_num: float, operation: str) -> dict:
 
 # ── Stock price ──────────────────────────────────────────────────────────────
 @tool
-def get_stock_price(symbol: str) -> dict:
+def get_stock_price(symbol: str) -> str:
     """
-    Fetch the latest stock price for a given ticker symbol (e.g. 'AAPL', 'TSLA')
-    using the Alpha Vantage API.
+    Fetch the latest stock price for a given ticker symbol (e.g. AAPL, TSLA).
     """
-    url = (
-        "https://www.alphavantage.co/query"
-        f"?function=GLOBAL_QUOTE&symbol={symbol}&apikey=SHQRH39LI8CYJESB"
-    )
-    r = requests.get(url, timeout=10)
-    return r.json()
+    try:
+        if not api_key:
+            return "API key not configured."
 
+        url = (
+            "https://www.alphavantage.co/query"
+            f"?function=GLOBAL_QUOTE&symbol={symbol}&apikey={api_key}"
+        )
+
+        r = requests.get(url, timeout=10)
+        data = r.json()
+
+        if "Note" in data:
+            return "API limit reached. Try again later."
+
+        quote = data.get("Global Quote", {})
+        price = quote.get("05. price")
+
+        if not price:
+            return f"Could not fetch stock price for {symbol}"
+
+        return f"The current price of {symbol} is ${price}"
+
+    except Exception as e:
+        return f"Error fetching stock price: {str(e)}"
 
 # ── RAG tool ─────────────────────────────────────────────────────────────────
 @tool

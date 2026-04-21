@@ -31,4 +31,6 @@ streamlit>=1.38.0
 # ── Env / Utils ───────────────────────────────────────────────────────────────
 python-dotenv>=1.0.0
 
+langgraph-checkpoint-sqlite
+
 # If need use pip install -U ddgs
